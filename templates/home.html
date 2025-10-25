@@ -1,0 +1,259 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lost & Found Dashboard</title>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ----------------- Body & Background ----------------- */
+body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: radial-gradient(circle at 30% 30%, #0f0c29, #302b63, #24243e);
+    color: #00ffea;
+    overflow-x: hidden;
+}
+
+/* ----------------- Page Header ----------------- */
+header {
+    text-align: center;
+    margin: 40px 0 20px;
+}
+header h1 {
+    font-size: 3rem;
+    text-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea;
+}
+header p {
+    font-size: 1.2rem;
+    color: #00ffe0aa;
+}
+
+/* ----------------- Radar Section ----------------- */
+.radar-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 40px auto;
+    border-radius: 50%;
+    background: rgba(0,255,234,0.05);
+    box-shadow: 0 0 50px #00ffea33 inset;
+    overflow: hidden;
+}
+
+.radar-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(0,255,234,0.2);
+    animation: rotateRadar 12s linear infinite;
+}
+
+.radar-grid::before, .radar-grid::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 2px; height: 100%;
+    background: rgba(0,255,234,0.2);
+    transform: translate(-50%, -50%);
+}
+
+.radar-grid::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+@keyframes rotateRadar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.radar-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: #00ffea;
+    text-shadow: 0 0 15px #00ffea, 0 0 30px #00ffea;
+}
+
+/* Radar Pulses */
+.pulse {
+    position: absolute;
+    border: 2px solid #00ffea55;
+    border-radius: 50%;
+    width: 100px; height: 100px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseAnim 4s infinite;
+}
+.pulse:nth-child(2) { width: 200px; height: 200px; animation-delay: 1s; }
+.pulse:nth-child(3) { width: 300px; height: 300px; animation-delay: 2s; }
+
+@keyframes pulseAnim {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.7; }
+    50% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+    100% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.7; }
+}
+
+/* ----------------- Moving Blips ----------------- */
+.blip {
+    position: absolute;
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    background: #ff0055;
+    box-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+    animation: moveBlip 6s infinite linear;
+}
+
+@keyframes moveBlip {
+    0% { transform: translate(0,0); opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { transform: translate(calc(var(--x)*1px), calc(var(--y)*1px)); opacity: 0; }
+}
+
+/* ----------------- Stats Section ----------------- */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea;
+    animation: fadeIn 2s ease forwards;
+    opacity: 0;
+}
+
+.stat p {
+    font-size: 1.2rem;
+    color: #00ffe0aa;
+    margin-top: 5px;
+}
+
+/* ----------------- Features Section ----------------- */
+.features {
+    margin: 80px auto 50px;
+    text-align: center;
+}
+.features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #00ffd5;
+    text-shadow: 0 0 10px #00ffd5, 0 0 20px #00ffd5;
+}
+.feature-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+.feature-item {
+    width: 220px;
+    text-align: center;
+    background: rgba(0,255,234,0.05);
+    border: 1px solid rgba(0,255,234,0.3);
+    border-radius: 15px;
+    padding: 25px 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #00ffe0;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+}
+.feature-item:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 30px #00ffea, 0 0 60px #00ffea55;
+}
+.feature-item i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+/* ----------------- Animations ----------------- */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Lost & Found Hub</h1>
+    <p>DHUAM University Village • Admin Dashboard</p>
+</header>
+
+<!-- Radar Animation -->
+<div class="radar-container">
+    <div class="radar-grid"></div>
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+    <div class="pulse"></div>
+    <div class="radar-center"><i class="fas fa-satellite-dish"></i></div>
+
+    <!-- Dynamic Blips -->
+    <div class="blip" style="--x: 120; --y: -100; animation-delay: 0s;"></div>
+    <div class="blip" style="--x: -80; --y: 150; animation-delay: 1s;"></div>
+    <div class="blip" style="--x: 60; --y: -180; animation-delay: 2s;"></div>
+    <div class="blip" style="--x: -150; --y: 80; animation-delay: 3s;"></div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats">
+    <div class="stat">
+        <div class="counter" data-target="{{ total_lost_items }}">0</div>
+        <p>Items Reported Lost</p>
+    </div>
+    <div class="stat">
+        <div class="counter" data-target="{{ total_found_items }}">0</div>
+        <p>Items Found</p>
+    </div>
+    <div class="stat">
+        <div class="counter" data-target="{{ total_claimed_items }}">0</div>
+        <p>Successful Reunions</p>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features">
+    <h2>System Features</h2>
+    <div class="feature-list">
+        <div class="feature-item"><i class="fas fa-bell"></i><p>Real-Time Notifications</p></div>
+        <div class="feature-item"><i class="fas fa-map-marker-alt"></i><p>Location Tracking</p></div>
+        <div class="feature-item"><i class="fas fa-users"></i><p>Owner & Finder Matching</p></div>
+        <div class="feature-item"><i class="fas fa-shield-alt"></i><p>Secure Data</p></div>
+        <div class="feature-item"><i class="fas fa-chart-line"></i><p>Analytics & Insights</p></div>
+    </div>
+</div>
+
+<!-- Counter JS -->
+<script>
+const counters = document.querySelectorAll('.counter');
+const animationSpeed = 200;
+const animateCounter = (counter) => {
+    const target = +counter.getAttribute('data-target');
+    const count = +counter.innerText;
+    const increment = target / animationSpeed;
+    if(count < target){
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(() => animateCounter(counter), 10);
+    } else {
+        counter.innerText = target.toLocaleString();
+    }
+};
+window.addEventListener('load', () => {
+    counters.forEach(counter => animateCounter(counter));
+});
+</script>
+
+</body>
+</html>
